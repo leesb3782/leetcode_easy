@@ -1,0 +1,61 @@
+// 475. Heaters
+// https://leetcode.com/problems/heaters
+int compare(const void* a, const void *b)
+{
+    int l = *((int*)a);
+    int r = *((int*)b);
+
+    if (l == r){
+        return 0;
+    }
+
+    return l < r ? -1 : 1;
+}
+
+int findRadius(int* houses, int housesSize, int* heaters, int heatersSize) {
+    int min_radius=0, temp_radius, i, j;
+    
+    if(housesSize == 0)
+        return 0;
+        
+    if(heatersSize == 0)
+        return 2147483647;
+    
+    qsort(houses, housesSize, sizeof(int), compare);
+    qsort(heaters, heatersSize, sizeof(int), compare);
+
+    i = 0;
+    j = 0;
+    while(houses[i] <= heaters[0]) {  //先看最左邊的部分
+        min_radius = min_radius > heaters[0] - houses[i] ? min_radius : heaters[0] - houses[i];
+        i++;
+        if(i==housesSize)
+            break;
+    }
+    
+    while(i<housesSize&&j<heatersSize-1) { //中間的部分
+        temp_radius = (heaters[j+1] - heaters[j]) / 2;
+        if(heaters[j]+temp_radius >= houses[i]) {
+            min_radius = min_radius > houses[i] - heaters[j] ? min_radius : houses[i] - heaters[j];
+            i++;
+            continue;
+        } else {
+            j++;
+            while(houses[i] <= heaters[j]) {
+                min_radius = min_radius > heaters[j] - houses[i] ? min_radius : heaters[j] - houses[i];
+                i++;
+                if(i==housesSize)
+                    break;
+            }
+        }
+    }
+    
+    if(j==heatersSize-1) { //最右邊的部分
+        while(i<housesSize) {
+            min_radius = min_radius > houses[i] - heaters[j] ? min_radius : houses[i] - heaters[j];
+            i++;
+        }    
+    }
+    
+    return min_radius;
+}
