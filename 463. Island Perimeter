@@ -1,0 +1,41 @@
+// 463. Island Perimeter
+// https://leetcode.com/problems/island-perimeter
+int islandPerimeter(int** grid, int gridRowSize, int gridColSize) {
+    int perimeter=0;
+    int i,j;
+    for(i=0;i<gridRowSize;i++) {
+        for(j=0;j<gridColSize;j++) {
+            if(grid[i][j]==1) {
+                // check up grid
+                if(i==0) {
+                    perimeter++;
+                } else {
+                    if(grid[i-1][j] == 0)
+                        perimeter++;
+                }
+                // check down grid
+                if(i==(gridRowSize-1)) {
+                    perimeter++;
+                } else {
+                    if(grid[i+1][j] == 0)
+                        perimeter++;
+                }
+                // check left grid
+                if(j==0) {
+                    perimeter++;
+                } else {
+                    if(grid[i][j-1] == 0)
+                        perimeter++;
+                }
+                // check right grid
+                if(j==(gridColSize-1)) {
+                    perimeter++;
+                } else {
+                    if(grid[i][j+1] == 0)
+                        perimeter++;
+                }  
+            }
+        }
+    }
+    return perimeter;
+}
