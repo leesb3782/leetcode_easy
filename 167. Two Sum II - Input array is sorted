@@ -1,0 +1,31 @@
+// 167. Two Sum II - Input array is sorted
+// https://leetcode.com/problems/two-sum-ii-input-array-is-sorted
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* twoSum(int* numbers, int numbersSize, int target, int* returnSize) {
+    *returnSize = 2;
+    int *answer = (int *)malloc(2*sizeof(int));
+    int i,j,found=0;
+    
+    memset(answer, 0, 2*sizeof(int));
+    for(i=0;i<numbersSize-1;i++) {
+        for(j=i+1;j<numbersSize;j++) {
+            if(numbers[i]+numbers[j] == target) {
+                found=1;
+                answer[0] = i+1;
+                answer[1] = j+1;
+                break;
+            } else if(numbers[i]+numbers[j] > target) {
+                break;
+            } else {
+                continue;
+            }
+        }
+        if(found==1)
+            break;
+    }
+
+    return answer;
+}
