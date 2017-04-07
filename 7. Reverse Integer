@@ -1,4 +1,5 @@
 // 7. Reverse Integer
+// https://leetcode.com/problems/reverse-integer
 int reverse(int x) {
     bool postive = x > 0 ? 1 : 0;
     int first_digit = abs(x % 10);
