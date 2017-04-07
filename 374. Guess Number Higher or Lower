@@ -1,0 +1,25 @@
+// 374. Guess Number Higher or Lower
+// https://leetcode.com/problems/guess-number-higher-or-lower
+// Forward declaration of guess API.
+// @param num, your guess
+// @return -1 if my number is lower, 1 if my number is higher, otherwise return 0
+int guess(int num);
+
+class Solution {
+public:
+    int guessNumber(int n) {
+        int min = 1, max = n, mid = 1, guess_result;
+        while(min <= max) {
+            mid = (max-min) / 2 + min;
+	// Do NOT use (maxNumber+minNumber)/2 in case of over flow
+            guess_result = guess(mid);
+            if(guess_result == -1)
+                max = mid - 1;
+            else if(guess_result == 0)
+                break;
+            else
+                min = mid + 1;
+        }
+        return mid;
+    }
+};
