@@ -1,0 +1,33 @@
+// 290. Word Pattern
+// https://leetcode.com/problems/word-pattern
+bool wordPattern(char* pattern, char* str) {
+    char *match[26] = {NULL};
+    int len_p = strlen(pattern);
+    char **used = (char **)malloc(len_p*sizeof(char *));
+    int used_count=0;
+    int i, j, len_pch;
+    char * pch;
+    pch = strtok (str," ");
+    for(i=0;i<len_p;i++) {
+        len_pch = strlen(pch);
+        //printf("pch %s, match[%d] %s\n", pch, pattern[i]-'a', match[pattern[i]-'a']);
+        if(match[pattern[i]-'a'] == NULL) {
+            for(j=0;j<used_count;j++) {
+                if(strncmp(used[j], pch, len_pch) == 0)
+                    return false;
+            }
+            match[pattern[i]-'a'] = (char *) malloc((len_pch+1) * sizeof(char));
+            strncpy(match[pattern[i]-'a'], pch, len_pch);
+            used[used_count] = (char *) malloc((len_pch+1) * sizeof(char));
+            strncpy(used[used_count], pch, len_pch);
+            used_count++;
+        } else {
+            if(strncmp(match[pattern[i]-'a'], pch, len_pch) != 0)
+                return false;
+        }
+        pch = strtok (NULL," ");
+        if(pch == NULL)
+            break;
+    }
+    return pch == NULL && i == len_p-1;
+}
