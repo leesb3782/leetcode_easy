@@ -1,0 +1,27 @@
+// 100. Same Tree
+// https://leetcode.com/problems/same-tree
+bool BinaryTreeTravel(struct TreeNode* p, struct TreeNode* q) {
+    bool left,right;
+    if(p == NULL && q == NULL) {
+        return true;
+    }
+    if(p != NULL && q != NULL) {
+        left = BinaryTreeTravel(p->left,q->left);
+        right = BinaryTreeTravel(p->right,q->right);
+        if(p->val == q->val && left & right)
+            return true;
+    }
+    return false;
+}
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
+    return BinaryTreeTravel(p,q);
+}
