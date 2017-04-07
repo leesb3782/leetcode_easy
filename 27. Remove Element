@@ -1,0 +1,25 @@
+// 27. Remove Element
+// https://leetcode.com/problems/remove-element
+int removeElement(int* nums, int numsSize, int val) {
+    int i,j;
+    int result=0, temp;
+    for(i=0;i<numsSize;i++) {
+        if(nums[i] != val) {
+            result++;
+        } else {
+            for(j=i+1;j<numsSize;j++) {
+                if(nums[i] != nums[j]) {
+                    //swap
+                    temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                    result++;
+                    break;
+                }
+            }
+            if(j == numsSize) // 因為i 已經被移到最後面了, 代表本來i的後面已經沒有其他target value
+                break;
+        }
+    }
+    return result;
+}
