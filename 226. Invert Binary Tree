@@ -1,0 +1,26 @@
+// 226. Invert Binary Tree
+// https://leetcode.com/problems/invert-binary-tree
+void BinaryTreeTravel(struct TreeNode* node) {
+    if(node == NULL)
+        return;
+    struct TreeNode * temp;
+    temp = node->left;
+    node->left = node->right;
+    node->right = temp;
+    BinaryTreeTravel(node->left);
+    BinaryTreeTravel(node->right);
+    return;
+}
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+struct TreeNode* invertTree(struct TreeNode* root) {
+    BinaryTreeTravel(root);
+    return root;
+}
