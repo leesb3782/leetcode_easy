@@ -1,0 +1,13 @@
+// 190. Reverse Bits
+// https://leetcode.com/problems/reverse-bits
+uint32_t reverseBits(uint32_t n) {
+    uint32_t answer = 0;
+    int i;
+    for(i=0;i<31;i++) {
+        answer |= (n&0x01);
+        answer <<= 1;
+        n >>= 1;
+    }
+    answer |= (n&0x01);
+    return answer;
+}
