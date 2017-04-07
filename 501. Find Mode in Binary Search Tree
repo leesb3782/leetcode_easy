@@ -1,0 +1,64 @@
+// 501. Find Mode in Binary Search Tree
+// https://leetcode.com/problems/find-mode-in-binary-search-tree
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+    vector<int> sortTree;
+public:
+    void InorderTraversal(TreeNode* node) {
+        if(node == NULL)
+            return;
+
+        InorderTraversal(node->left);
+        sortTree.push_back(node->val);
+        InorderTraversal(node->right);
+        return;
+    }
+    vector<int> findMode(TreeNode* root) {
+        int i, max_count = 1, temp_count = 1;
+        vector<int> answer;
+        if(root == NULL)
+            return answer;
+        InorderTraversal(root);
+        
+        //for(i=0;i<sortTree.size();i++)
+        //    cout << sortTree[i] << ' ';
+        //cout << '\n';
+        
+        for(i=0;i<sortTree.size()-1;i++) {
+            //cout << sortTree[i] << sortTree[i+1] << temp_count << max_count << endl;
+            if(sortTree[i] == sortTree[i+1])
+                temp_count++;
+            else {
+                if(max_count == temp_count)
+                    answer.push_back(sortTree[i]);
+                if(temp_count > max_count) {
+                    max_count = temp_count;
+                    temp_count = 1;
+                    answer.clear();
+                    answer.push_back(sortTree[i]);
+                } else
+                    temp_count = 1;
+            }
+        }
+
+        if(max_count == temp_count)
+            answer.push_back(sortTree[i]); // Final element
+            
+        if(temp_count > max_count) {
+            max_count = temp_count;
+            temp_count = 1;
+            answer.clear();
+            answer.push_back(sortTree[i]);
+        }
+
+        return answer;
+    }
+};
