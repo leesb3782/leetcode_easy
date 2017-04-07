@@ -1,0 +1,57 @@
+// 155. Min Stack
+// https://leetcode.com/problems/min-stack
+class MinStack {
+    vector<int> stack;
+    int min;
+public:
+    /** initialize your data structure here. */
+    MinStack() {
+        stack.clear();
+        return;
+    }
+    
+    void push(int x) {
+        int stack_size = stack.size();
+        if(stack_size == 0) {
+            min = x;
+        } else {
+            min = min < x ? min : x;
+        }
+
+        stack.push_back(x);
+        return;
+    }
+    
+    void pop() {
+        stack.pop_back();
+        int stack_size = stack.size();
+        int i;
+        if(stack_size == 0) {
+            return;
+        } else {
+            min = stack[0];
+        }
+            
+        for(i=1;i<stack_size;i++) {
+            min = min < stack[i] ? min : stack[i];
+        }
+        return;
+    }
+    
+    int top() {
+        return stack.back();
+    }
+    
+    int getMin() {
+        return min;
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
