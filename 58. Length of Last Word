@@ -1,0 +1,12 @@
+// 58. Length of Last Word
+// https://leetcode.com/problems/length-of-last-word
+int lengthOfLastWord(char* s) {
+    char *ptr = NULL;
+    int answer=0;
+    ptr = strtok(s," ");
+    while(ptr!=NULL) {
+        answer=strlen(ptr);
+        ptr = strtok(NULL," ");
+    }
+    return answer;
+}
