@@ -1,0 +1,45 @@
+// 13. Roman to Integer
+// https://leetcode.com/problems/roman-to-integer
+int romanToInt(char* s) {
+    int len = strlen(s);
+    int i, answer=0;
+    
+    for(i=0;i<len;i++) {
+        if(s[i] == 'M') {
+            answer += 1000;
+        } else if(s[i] == 'D') {
+            answer += 500;
+        } else if(s[i] == 'C') {
+            if((i < len-1) && (s[i+1] == 'M' || s[i+1] == 'D'))
+                answer -= 100;
+            else 
+                answer += 100;
+            /*
+            if(i == len-1) {
+                answer += 100;
+            } else {
+                if(s[i+1] == 'M' || s[i+1] == 'D') {
+                    answer -= 100;
+                } else {
+                    answer += 100;
+                }
+            }
+            */
+        } else if(s[i] == 'L') {
+            answer += 50;
+        } else if(s[i] == 'X') {
+            if((i < len-1) && (s[i+1] == 'L' || s[i+1] == 'C'))
+                answer -= 10;
+            else
+                answer += 10;
+        } else if(s[i] == 'V') {
+            answer += 5;
+        } else if(s[i] == 'I') {
+            if((i < len-1) && (s[i+1] == 'V' || s[i+1] == 'X'))
+                answer -= 1;
+            else
+                answer += 1;
+        }
+    }
+    return answer;
+}
