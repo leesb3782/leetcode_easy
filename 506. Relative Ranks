@@ -1,0 +1,63 @@
+// 506. Relative Ranks
+// https://leetcode.com/problems/relative-ranks
+int compare(const void* a, const void *b)
+{
+    int l = *((int*)a);
+    int r = *((int*)b);
+
+    if (l == r){
+        return 0;
+    }
+
+    return l < r ? 1 : -1;
+}
+
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+char** findRelativeRanks(int* nums, int numsSize, int* returnSize) {
+    char **answer = (char **)malloc(numsSize*sizeof(char *));
+    int i,j;
+    int *rank = (int *)malloc(numsSize*sizeof(int));
+    *returnSize = numsSize;
+    int max,min,mid;
+    
+    memcpy(rank, nums, numsSize*sizeof(int));
+    qsort(rank, numsSize, sizeof(int), compare);
+    
+    //for(i=0;i<numsSize;i++) {
+    //    printf("rank[%d] %d\n", i, rank[i]);
+    //}
+    
+    for(i=0;i<numsSize;i++) {
+        answer[i] = (char *)malloc(13*sizeof(char));
+        max=numsSize-1;
+        min=0;
+        // Binary search
+        while(min <= max) {
+            mid = ( min + max ) / 2;
+            if(rank[mid] == nums[i])
+                break;
+            if(rank[mid] > nums[i]) {
+                min = mid + 1;
+            } else {
+                max = mid - 1; 
+            }
+        }
+        
+        //printf("mid %d\n", mid);
+        
+        if(mid==0) {
+            snprintf(answer[i], strlen("Gold Medal")+1, "Gold Medal");
+        } else if(mid==1) {
+            snprintf(answer[i], strlen("Silver Medal")+1, "Silver Medal");
+        } else if(mid==2) {
+            snprintf(answer[i], strlen("Bronze Medal")+1, "Bronze Medal");
+        } else {
+            snprintf(answer[i], 13, "%d", mid+1);
+        }
+    }
+    
+    return answer;
+}
