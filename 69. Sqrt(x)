@@ -1,0 +1,18 @@
+// 69. Sqrt(x)
+// https://leetcode.com/problems/sqrtx
+int mySqrt(int x) {
+    if (x <= 0) return 0;
+    if (x <= 3) return 1;
+    int min = 1, max = x/2, mid, ans;
+    while (min <= max) {
+        mid = (max + min) / 2;
+        if (mid <= x/mid) {
+            min = mid + 1;
+            ans = mid;
+        } else {
+            max = mid - 1;
+        }
+        //printf("max %d min %d mid %d\n", max, min, mid);
+    }
+    return ans;
+}
