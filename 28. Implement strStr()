@@ -1,0 +1,23 @@
+// 28. Implement strStr()
+// https://leetcode.com/problems/implement-strstr
+int strStr(char* haystack, char* needle) {
+    int h_len = strlen(haystack);
+    int n_len = strlen(needle);
+    int i, j, k;
+    
+    if(n_len > h_len)
+        return -1;
+        
+    if(n_len == 0)
+        return 0;
+    
+    for(i=0;i<=h_len-n_len;i++) {
+        for(j=i,k=0;k<n_len;j++,k++) {
+            if(haystack[j] != needle[k])
+                break;
+        }
+        if(k==n_len)
+            return i;
+    }
+    return -1;
+}
