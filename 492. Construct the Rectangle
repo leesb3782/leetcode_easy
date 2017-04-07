@@ -1,0 +1,20 @@
+// 492. Construct the Rectangle
+// https://leetcode.com/problems/construct-the-rectangle
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* constructRectangle(int area, int* returnSize) {
+    int i;
+    int *answer = (int *)malloc(2*sizeof(int));
+    *returnSize = 2;
+    for(i=sqrt(area);i>0;i--) {
+        if(area % i == 0) {
+            answer[0] = area / i;
+            answer[1] = i;
+            break;
+        }
+    }
+    
+    return answer;
+}
