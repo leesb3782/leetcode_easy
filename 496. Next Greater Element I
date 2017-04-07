@@ -1,0 +1,29 @@
+// 496. Next Greater Element I
+// https://leetcode.com/problems/next-greater-element-i
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* nextGreaterElement(int* findNums, int findNumsSize, int* nums, int numsSize, int* returnSize) {
+    int *answer = malloc(findNumsSize*sizeof(int));
+    *returnSize = findNumsSize;
+    
+    int i,j,k;
+    for(i=0;i<findNumsSize;i++) {
+        for(j=0;j<numsSize;j++) {
+            if(findNums[i] == nums[j]) {
+                for(k=j+1;k<numsSize;k++) {
+                    if(nums[k] > findNums[i]) {
+                        answer[i] = nums[k];
+                        break;
+                    }
+                }
+                if(k==numsSize)
+                    answer[i] = -1;
+                break; // 重要
+            }
+        }
+        
+    }
+    return answer;
+}
