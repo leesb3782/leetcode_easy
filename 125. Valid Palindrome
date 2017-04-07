@@ -1,0 +1,29 @@
+// 125. Valid Palindrome
+// https://leetcode.com/problems/valid-palindrome
+bool isPalindrome(char* s) {
+    int origin_len = strlen(s);
+    int i, j, temp_len = 0;
+    char *temp_s = (char *)malloc((origin_len+1)*sizeof(char));
+    for(i=0;i<origin_len;i++) {
+        if (isalnum(s[i])) {
+            temp_s[temp_len] = tolower(s[i]);
+            temp_len++;
+        }
+    }
+    temp_s[temp_len] = '\0';
+    
+    //printf("temp_s %s, temp_len %d\n", temp_s, temp_len);
+    if(temp_len <= 1) {
+        free(temp_s);
+        return true;
+    }
+        
+    for(i=0,j=temp_len-1;i<j;i++,j--) {
+        if(temp_s[i] != temp_s[j]) {
+            free(temp_s);
+            return false;
+        }
+    }
+    free(temp_s);
+    return true;
+}
