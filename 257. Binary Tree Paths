@@ -1,0 +1,50 @@
+// 257. Binary Tree Paths
+// https://leetcode.com/problems/binary-tree-paths
+#include <string>
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+struct TreeNodeString {
+    TreeNode *node;
+    string str;
+}; 
+
+class Solution {
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        stack<TreeNodeString> s;
+        TreeNodeString p,temp;
+        vector<string> answer;
+        
+        if(root!=NULL) {
+            p.node = root;
+            p.str = to_string(p.node->val);
+            s.push(p);
+        }
+        
+        while(!s.empty()) {
+            p = s.top();
+            s.pop();
+            if(p.node->left==NULL && p.node->right==NULL) {
+                answer.push_back(p.str);
+            } 
+            if(p.node->left!=NULL) {
+                temp.node = p.node->left;
+                temp.str = p.str + "->" + to_string(p.node->left->val);
+                s.push(temp);
+            }
+            if(p.node->right!=NULL) {
+                temp.node = p.node->right;
+                temp.str = p.str + "->" + to_string(p.node->right->val);
+                s.push(temp);
+            }
+        }
+        return answer;
+    }
+};
