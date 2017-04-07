@@ -1,0 +1,33 @@
+// 205. Isomorphic Strings
+// https://leetcode.com/problems/isomorphic-strings
+bool isIsomorphic(char* s, char* t) {
+    int len = strlen(s);
+    int char_diff_s[256];
+    int char_diff_t[256];
+    int i,temp;
+    
+    for(i=0;i<256;i++) {
+        char_diff_s[i] = 1000;
+        char_diff_t[i] = 1000;
+    }
+    
+    for(i=0;i<len;i++) {
+        temp = s[i] - t[i];
+        //printf("s[%d] %c, t[%d] %c, temp %d\n", i, s[i], i, t[i], temp);
+        //printf("char_diff_s[%d] %d\n",s[i], char_diff_s[s[i]]);
+        //printf("char_diff_t[%d] %d\n",t[i], char_diff_t[t[i]]);
+        if(char_diff_s[s[i]] != 1000) {
+            if(char_diff_s[s[i]] != temp)
+                return false;
+        } else {
+            char_diff_s[s[i]] = temp;
+        }
+        if(char_diff_t[t[i]] != 1000) {
+            if(char_diff_t[t[i]] != temp)
+                return false;
+        } else {
+            char_diff_t[t[i]] = temp;
+        }
+    }
+    return true;
+}
