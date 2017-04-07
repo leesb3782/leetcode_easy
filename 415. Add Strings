@@ -1,0 +1,45 @@
+// 415. Add Strings
+// https://leetcode.com/problems/add-strings
+char* addStrings(char* num1, char* num2) {
+    int num1Size = strlen(num1);
+    int num2Size = strlen(num2);
+    int answerSize = num1Size > num2Size ? num1Size+1 : num2Size+1;
+    int i,j,k,temp;
+    int carry=0;
+    
+    char *answer = (char *)malloc((answerSize+1)*sizeof(char));
+    memset(answer, 0, (answerSize+1)*sizeof(char));
+    
+    for(i=num1Size-1,j=num2Size-1,k=answerSize-1;i>=0&&j>=0;i--,j--,k--) {
+        temp = num1[i] - '0' + num2[j] - '0';
+        temp += carry;
+        answer[k] = temp%10 + '0';
+        carry = temp/10;
+    }
+    
+    for(;i>=0;i--,k--) {
+        temp = num1[i] - '0';
+        temp += carry;
+        answer[k] = temp%10 + '0';
+        carry = temp/10;
+    }
+    
+    for(;j>=0;j--,k--) {
+        temp = num2[j] - '0';
+        temp += carry;
+        answer[k] = temp%10 + '0';
+        carry = temp/10;
+    }
+    
+    if(carry>0)
+        answer[k] = carry + '0';
+    else {
+        char *true_answer = (char *)malloc(answerSize*sizeof(char));
+        memset(true_answer, 0, answerSize*sizeof(char));
+        strncpy(true_answer, answer+1, answerSize*sizeof(char));
+        free(answer);
+        answer = true_answer;
+    }
+
+    return answer;
+}
