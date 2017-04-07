@@ -1,0 +1,52 @@
+// 401. Binary Watch
+// https://leetcode.com/problems/binary-watch
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+char** readBinaryWatch(int num, int* returnSize) {
+    int hour,minute;
+    int hour_count[4] = {1,4,5,2};
+    int minute_count[6] = {1,6,15,20,14,4};
+    int hour_bit[4][5] = {{0,-1,-1,-1,-1},{1,2,4,8,-1},{3,5,6,9,10},{7,11,-1,-1,-1}};
+    int minute_bit[6][20] = {   {0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                                {1,2,4,8,16,32,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                                {3,5,6,9,10,12,17,18,20,24,33,34,36,40,48,-1,-1,-1,-1,-1},
+                                {7,11,13,14,19,21,22,25,26,28,35,37,38,41,42,44,49,50,52,56},
+                                {15,23,27,29,30,39,43,45,46,51,53,54,57,58,-1,-1,-1,-1,-1,-1},
+                                {31,47,55,59,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
+    int i,j,index;
+    char **answer = NULL;
+    *returnSize = 0;
+    if(num>=9) {
+        return NULL;
+    }
+    
+    for(hour=0;hour<4&&hour<=num;hour++) {
+        for(minute = num - hour; minute<6&&minute+hour<=num;minute++) {
+            //printf("hour %d minute %d hour_count %d minute_count %d\n", hour, minute, hour_count[hour], minute_count[minute]);
+            (*returnSize) += hour_count[hour] * minute_count[minute] ;
+        }
+    }
+    
+    //printf("returnSize %d\n", *returnSize);
+    
+    answer = (char **) malloc((*returnSize)*sizeof(char *));
+    for(i=0;i<*returnSize;i++) {
+        answer[i] = (char *)malloc(6*sizeof(char));
+    }
+    
+    index=0;
+    for(hour=0;hour<4&&hour<=num;hour++) {
+        for(minute = num - hour; minute<6&&minute+hour<=num;minute++) {
+            for(i=0;i<hour_count[hour];i++) {
+                for(j=0;j<minute_count[minute];j++) {
+                    snprintf(answer[index],6,"%d:%02d", hour_bit[hour][i], minute_bit[minute][j]);
+                    index++;
+                }
+            }
+        }
+    }
+    
+    return answer;
+}
