@@ -1,0 +1,23 @@
+// 217. Contains Duplicate
+// https://leetcode.com/problems/contains-duplicate
+int compare(const void* a, const void *b)
+{
+    int l = *((int*)a);
+    int r = *((int*)b);
+
+    if (l == r){
+        return 0;
+    }
+
+    return l < r ? -1 : 1;
+}
+
+bool containsDuplicate(int* nums, int numsSize) {
+    int i;
+    qsort(nums, numsSize, sizeof(int), compare);
+    for(i=0;i<numsSize-1;i++) {
+        if(nums[i] == nums[i+1])
+            return true;
+    }
+    return false;
+}
