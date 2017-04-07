@@ -1,0 +1,36 @@
+// 500. Keyboard Row
+// https://leetcode.com/problems/keyboard-row
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+char** findWords(char** words, int wordsSize, int* returnSize) {
+    char ** answerWords = (char **)malloc(wordsSize*sizeof(char *));
+    char row[3][22]={"QWERTYUIOPqwertyuiop", "ASDFGHJKLasdfghjkl", "ZXCVBNMzxcvbnm"};
+    
+    int i,j,len,result;
+    //printf("wordsSize[%d]\n", wordsSize);
+    *returnSize=0;
+    for(i=0;i<wordsSize;i++) {
+        len = strlen(words[i]);
+        //printf("words[%d] %s\n", i, words[i]);
+        //check row
+        for(j=0;j<3;j++) {
+            result = strspn (words[i],row[j]);
+            //printf("result %d row[%d] %s\n", result, j, row[j]);
+            if(result == len) {
+                answerWords[*returnSize] = (char *)malloc((len+1)*sizeof(char));
+                memset(answerWords[*returnSize], 0, (len+1)*sizeof(char));
+                strncpy(answerWords[*returnSize],words[i],len);
+                (*returnSize)++;
+                //printf("returnSize[%d]\n", *returnSize);
+                break;
+            }
+        }
+    }
+
+    //for(i=0;i<*returnSize;i++)
+    //    printf("answerWords[%d] %s\n", i, answerWords[i]);
+
+    return answerWords;
+}
