@@ -1,0 +1,32 @@
+// 404. Sum of Left Leaves
+// https://leetcode.com/problems/sum-of-left-leaves
+int BinaryTreeTravel(struct TreeNode *Node, bool isLeft) {
+    int left=0,right=0;
+    if(Node->left == NULL && Node->right == NULL && isLeft)
+        return Node->val;
+    if(Node->left!=NULL)
+        left = BinaryTreeTravel(Node->left, true);
+    if(Node->right!=NULL)
+        right = BinaryTreeTravel(Node->right, false);
+    return left+right;
+}
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+int sumOfLeftLeaves(struct TreeNode* root) {
+    int left=0,right=0;
+    if(root==NULL)
+        return 0;
+        
+    if(root->left!=NULL)
+        left = BinaryTreeTravel(root->left, true);
+    if(root->right!=NULL)
+        right = BinaryTreeTravel(root->right, false);
+    return left+right;
+}
