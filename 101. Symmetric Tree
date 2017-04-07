@@ -1,0 +1,46 @@
+// 101. Symmetric Tree
+// https://leetcode.com/problems/symmetric-tree
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+struct TreeNodePlus {
+    int val;
+    int level;
+};
+class Solution {
+public:
+    vector<TreeNodePlus> inorderarray;
+    int level;
+    void BinaryTreeTravel(TreeNode* node, int level) {
+        TreeNodePlus temp;
+        if(node == NULL)
+            return;
+        BinaryTreeTravel(node->left, level+1);
+        temp.val = node->val;
+        temp.level = level;
+        inorderarray.push_back(temp);
+        BinaryTreeTravel(node->right, level+1);
+        return;
+    }
+    bool isSymmetric(TreeNode* root) {
+        inorderarray.clear();
+        BinaryTreeTravel(root, 0);
+        int i=0,j=inorderarray.size()-1;
+        //for(i=0;i<inorderarray.size();i++)
+        //    cout << ' ' << inorderarray[i];
+        //cout << '\n';
+        while(i<j) {
+            if(inorderarray[i].val!=inorderarray[j].val || inorderarray[i].level !=inorderarray[j].level)
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+};
