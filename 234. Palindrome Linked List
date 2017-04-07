@@ -1,0 +1,50 @@
+// 234. Palindrome Linked List
+// https://leetcode.com/problems/palindrome-linked-list
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+bool isPalindrome(struct ListNode* head) {
+    int i, list_len = 0, tail_len;
+    struct ListNode* p = head, * tail, *pp;
+    if(head == NULL)
+        return true;
+    
+    while(p!=NULL) {
+        list_len++;
+        p = p->next;
+    }
+    
+    if(list_len == 1)
+        return true;
+    
+    tail_len = list_len / 2;
+    //printf("list_len %d, tail_len %d\n", list_len, tail_len);
+    
+    tail = head;
+    for(i=0;i<list_len-tail_len;i++) {
+        tail = tail->next;
+    }
+    //printf("tail->val %d\n", tail->val);
+    p = tail->next;
+    tail->next = NULL;
+    while(p!=NULL) {
+        pp = p->next;
+        p->next = tail;
+        tail = p;
+        p = pp;
+    }
+    
+    p = head;
+    pp = tail;
+    while(p!=NULL && pp!=NULL) {
+        if(p->val != pp->val)
+            return false;
+        p = p->next;
+        pp = pp->next;
+    }
+    return true;
+}
