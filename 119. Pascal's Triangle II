@@ -1,0 +1,40 @@
+// 119. Pascal's Triangle II
+// https://leetcode.com/problems/pascals-triangle-ii
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* getRow(int rowIndex, int* returnSize) {
+    int *answer = (int *) malloc((1+rowIndex)*sizeof(int));
+    int *temp = (int *) malloc((1+rowIndex)*sizeof(int));
+    int *temp2 = (int *) malloc((1+rowIndex)*sizeof(int));
+    int *temp3;
+    memset(answer, 1, (1+rowIndex)*sizeof(int));
+    int i, j, k;
+    (*returnSize) = rowIndex+1;
+    for(i=0;i<=rowIndex;i++) {
+        answer[i] = 1;
+        temp[i] = i + 1;
+        temp2[i] = 1;
+    }
+
+    for(i=1,j=rowIndex-1;i<=j;i++,j--) {
+        if(i==1 || j == rowIndex-1) {
+            answer[i] = answer[j] = rowIndex;
+            continue;
+        }
+        
+        for(k=1;k<1+rowIndex;k++) {
+            temp2[k] = temp2[k-1] + temp[k];
+            //printf("temp2[%d] %d ", k, temp2[k]);
+        }
+        //printf("\n");
+        temp3 = temp2;
+        temp2 = temp;
+        temp = temp3;
+        
+        answer[i] = answer[j] = temp[j];
+    }
+    
+    return answer;
+}
