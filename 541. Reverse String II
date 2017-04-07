@@ -1,0 +1,16 @@
+// 541. Reverse String II
+// https://leetcode.com/problems/reverse-string-ii
+char* reverseStr(char* s, int k) {
+    int len = strlen(s);
+    int i,j,tail;
+    char temp;
+    for(tail=0;tail<len;tail+= 2*k) {
+        j = tail+k-1 > len-1 ? len-1 : tail+k-1;
+        for(i=tail;i<j;i++,j--) {
+            temp = s[i];
+            s[i] = s[j];
+            s[j] = temp;
+        }
+    }
+    return s;
+}
