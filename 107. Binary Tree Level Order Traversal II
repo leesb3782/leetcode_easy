@@ -1,0 +1,74 @@
+// 107. Binary Tree Level Order Traversal II
+// https://leetcode.com/problems/binary-tree-level-order-traversal-ii
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ 
+struct TreeNodeLevel {
+    TreeNode *node;
+    int level;
+};
+ 
+class Solution {
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        vector<vector<int>> result;
+        
+        if(root == NULL)
+            return result;
+        
+        queue<TreeNodeLevel> q;
+        stack<TreeNodeLevel> s;
+        TreeNodeLevel p;
+        TreeNodeLevel child;
+        int leaf_level = 0;
+        
+        p.node = root;
+        p.level = 0;
+        q.push(p);
+        
+        // BFS
+        while(!q.empty()) {
+            p = q.front();
+            q.pop();
+            
+            if(p.node == NULL)
+                continue;
+            else {
+                s.push(p);
+                leaf_level = leaf_level > p.level ? leaf_level : p.level;
+                
+                //printf("val %d level %d\n", p.node->val, p.level);
+                child.node = p.node->left;
+                child.level = p.level+1;
+                q.push(child);
+                
+                child.node = p.node->right;
+                child.level = p.level+1;
+                q.push(child);
+            }
+        }
+        
+
+        int i = 0;
+        result.resize(leaf_level+1);
+        while(!s.empty()) {
+            p = s.top();
+            s.pop();
+            //printf("val %d level %d, leaf_level %d\n", p.node->val, p.level, leaf_level);
+            if(p.level != leaf_level) {
+                i++;
+                leaf_level = p.level;
+            }
+            result[i].insert(result[i].begin(), p.node->val);
+        }
+        
+        return result;
+    }
+};
