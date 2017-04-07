@@ -1,0 +1,42 @@
+// 67. Add Binary
+// https://leetcode.com/problems/add-binary
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int len_a = a.length();
+        int len_b = b.length();
+        
+        int carry = 0, sum;
+        int i,j;
+        string answer;
+        
+        for(i=len_a-1,j=len_b-1;i>=0&&j>=0;i--,j--) {
+            sum = a[i]-'0' + b[j]-'0' + carry;
+            carry = sum / 2;
+            answer.insert(answer.begin(),'0' + (sum%2));
+        }
+        
+        cout << carry << endl;
+        
+        if(len_a > len_b) {
+            for(i=len_a-len_b-1;i>=0;i--) {
+                sum = a[i]-'0' + carry;
+                carry = sum / 2;
+                answer.insert(answer.begin(),'0' + (sum%2));
+            }
+        }
+        
+        if(len_a < len_b) {
+            for(i=len_b-len_a-1;i>=0;i--) {
+                sum = b[i]-'0' + carry;
+                carry = sum / 2;
+                answer.insert(answer.begin(),'0' + (sum%2));
+            }
+        }
+        
+        if(carry == 1)
+            answer.insert(answer.begin(),'0' + carry);
+        
+        return answer;
+    }
+};
