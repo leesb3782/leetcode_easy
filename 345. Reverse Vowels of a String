@@ -1,0 +1,40 @@
+// 345. Reverse Vowels of a String
+// https://leetcode.com/problems/reverse-vowels-of-a-string
+char* reverseVowels(char* s) {
+    char vowels[10] = {'a','e','i','u','o','A','E','I','U','O'};
+    int len = strlen(s);
+    int i=0,j=len-1,k;
+    bool isVowels=false;
+    char temp;
+    
+    while(i<j) {
+        if(isVowels == false) {
+            for(k=0;k<10;k++) {
+                if(s[i] == vowels[k])
+                    break;
+            }
+            if(k==10) {
+                i++;
+                continue;
+            } else {
+                isVowels = true;
+            }
+        }
+        for(k=0;k<10;k++) {
+            if(s[j] == vowels[k])
+                break;
+        }
+        if(k==10) {
+            j--;
+            continue;
+        }
+        
+        temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+        i++;
+        j--;
+        isVowels=false;
+    }
+    return s;
+}
