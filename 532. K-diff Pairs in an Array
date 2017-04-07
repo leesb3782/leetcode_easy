@@ -1,0 +1,44 @@
+// 532. K-diff Pairs in an Array
+// https://leetcode.com/problems/k-diff-pairs-in-an-array
+int compare(const void* a, const void *b)
+{
+    int l = *((int*)a);
+    int r = *((int*)b);
+
+    if (l == r){
+        return 0;
+    }
+
+    return l < r ? -1 : 1;
+}
+
+int findPairs(int* nums, int numsSize, int k) {
+    int i, j, answer = 0;
+    if(numsSize <= 1)
+        return 0;
+    qsort(nums, numsSize, sizeof(int), compare);
+    if(k==0) {
+        //find duplicate pairs
+        for(i=0;i<numsSize-1;i++) {
+            while(nums[i] == nums[i+1] && (i < numsSize-1)) {
+                answer++;
+                i++;
+            }
+        }
+    } else {
+        for(i=0;i<numsSize-1;i++) {
+            for(j=i+1;j<numsSize;j++) {
+                if(nums[j] - nums[i] == k) {
+                    answer++;
+                    break;
+                }
+                if(nums[j] - nums[i] > k) // 因為j後面的值更大
+                    break;
+            }
+            while(nums[i] == nums[i+1] && (i < numsSize-1)) {
+                i++;
+            }
+        }
+    }
+    return answer;
+}
