@@ -1,5 +1,5 @@
 // 1. Two Sum
-
+// https://leetcode.com/problems/two-sum
 int compare(const void* a, const void *b)
 {
     int l = *((int*)a);
