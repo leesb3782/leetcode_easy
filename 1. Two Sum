@@ -1,0 +1,47 @@
+// 1. Two Sum
+
+int compare(const void* a, const void *b)
+{
+    int l = *((int*)a);
+    int r = *((int*)b);
+
+    if (l == r){
+        return 0;
+    }
+
+    return l < r ? -1 : 1;
+}
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* twoSum(int* nums, int numsSize, int target) {
+    int* temp = (int *)malloc(numsSize*sizeof(int));
+    int* answer = (int *)malloc(2*sizeof(int));
+    memcpy(temp, nums, numsSize*sizeof(int));
+    qsort(temp, numsSize, sizeof(int), compare);
+    int i, j;
+    int answer_i, answer_j;
+    
+    for(i=0;i<numsSize-1;i++) {
+        for(j=i+1;j<numsSize;j++) {
+            if(temp[i]+temp[j] == target) {
+                answer_i = temp[i];
+                answer_j = temp[j];
+            } else if (temp[i]+temp[j] > target) {
+                break;
+            }
+        }
+    }
+    //printf("answer_i %d, answer_j %d\n", answer_i, answer_j);
+    answer[0] = -1;
+    answer[1] = -1;
+    for(i=0;i<numsSize;i++) {
+        if(answer_i == nums[i] && answer[0] == -1) {
+            answer[0] = i;
+            continue;
+        }
+        if(answer_j == nums[i] && answer[1] == -1)
+            answer[1] = i;
+    }
+    return answer;
+}
