@@ -1,0 +1,58 @@
+// 303. Range Sum Query - Immutable
+// https://leetcode.com/problems/range-sum-query-immutable
+typedef struct {
+    int *array;
+    int numsSize;
+    int prev_i;
+    int prev_j;
+    int prev_sum;
+} NumArray;
+
+NumArray* numArrayCreate(int* nums, int numsSize) {
+    NumArray *result = (NumArray *)malloc(sizeof(NumArray));
+    result->array = nums;
+    result->numsSize = numsSize;
+    result->prev_i = 0;
+    result->prev_j = 0;
+    result->prev_sum = numsSize != 0 ? nums[0] : 0;
+    return result;
+}
+
+int numArraySumRange(NumArray* obj, int i, int j) {
+    if(obj->numsSize == 0)
+        return 0;
+    
+    int answer = obj->prev_sum;
+    int prefix;
+    for(prefix=i;prefix<obj->prev_i;prefix++) {
+        answer+=obj->array[prefix];
+    }
+    
+    for(prefix=obj->prev_i;prefix<i;prefix++) {
+        answer-=obj->array[prefix];
+    }
+    
+    for(prefix=obj->prev_j+1;prefix<=j;prefix++) {
+        answer+=obj->array[prefix];
+    }
+    
+    for(prefix=j+1;prefix<=obj->prev_j;prefix++) {
+        answer-=obj->array[prefix];
+    }
+    obj->prev_i = i;
+    obj->prev_j = j;
+    obj->prev_sum = answer;
+    return answer;
+}
+
+void numArrayFree(NumArray* obj) {
+    free(obj);
+    return;
+}
+
+/**
+ * Your NumArray struct will be instantiated and called as such:
+ * struct NumArray* obj = numArrayCreate(nums, numsSize);
+ * int param_1 = numArraySumRange(obj, i, j);
+ * numArrayFree(obj);
+ */
