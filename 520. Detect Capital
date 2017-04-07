@@ -1,0 +1,33 @@
+// 520. Detect Capital
+// https://leetcode.com/problems/detect-capital
+bool detectCapitalUse(char* word) {
+    int len = strlen(word);
+    int i, first_letter=0, second_letter=0, current_letter=0;
+    
+    if(len <= 1)
+        return true;
+    
+    if(word[0] >= 0x41 && word[0] <= 0x5A)
+        first_letter = 1;
+    else
+        first_letter = 0;
+        
+    if(word[1] >= 0x41 && word[1] <= 0x5A)
+        second_letter = 1;
+    else
+        second_letter = 0;
+    
+    if(first_letter == 0 && second_letter == 1)
+        return false;
+    
+    for(i=2;i<len;i++) {
+        if(word[i] >= 0x41 && word[i] <= 0x5A)
+            current_letter = 1;
+        else
+            current_letter = 0;
+        
+        if(current_letter != second_letter)
+            return false;
+    }
+    return true;
+}
