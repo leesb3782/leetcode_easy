@@ -1,0 +1,24 @@
+// 400. Nth Digit
+// https://leetcode.com/problems/nth-digit
+int findNthDigit(int n) {
+    int i=0,j,k,l,temp;
+    char answer[11] = {0};
+    
+    if(n<=0)
+        return n;
+    
+    while(n > 9 * pow(10,i) * (i+1)) {
+        n -= 9 * pow(10,i) * (i+1);
+        i++;
+    }
+
+    j = (n-1) / (i+1); //從10^(i+1) ~ temp 中間有幾個數
+    k = (n-1) % (i+1);
+    temp = pow(10,i) + j;
+
+    //printf("n %d, i %d, j %d, k %d, temp %d\n", n, i, j, k, temp);
+    
+    snprintf(answer, 11, "%d", temp);
+    
+    return answer[k]-'0';
+}
