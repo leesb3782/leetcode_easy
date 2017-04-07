@@ -1,0 +1,32 @@
+// 409. Longest Palindrome
+// https://leetcode.com/problems/longest-palindrome
+int longestPalindrome(char* s) {
+    int uppercase[26] = {0};
+    int lowercase[26] = {0};
+    int i, len = strlen(s);
+    int result = 0;
+    
+    for(i=0;i<len;i++) {
+        if(s[i]>='A' && s[i]<='Z') {
+            uppercase[s[i]-'A']++;
+            if(uppercase[s[i]-'A']==2) {
+                result+=2;
+                uppercase[s[i]-'A']=0;
+            }
+        }
+        if(s[i]>='a' && s[i]<='z') {
+            lowercase[s[i]-'a']++;
+            if(lowercase[s[i]-'a']==2) {
+                result+=2;
+                lowercase[s[i]-'a']=0;
+            }
+        }
+    }
+    for(i=0;i<26;i++) {
+        if(lowercase[i]==1||uppercase[i]==1) {
+            result++;
+            break;
+        }
+    }
+    return result;
+}
