@@ -1,0 +1,13 @@
+// 
+// 
+int missingNumber(int* nums, int numsSize) {
+    long sum = numsSize * (numsSize+1) / 2;
+    long array_sum=0;
+    //printf("sum %d\n", sum);
+    int i;
+    for(i=0;i<numsSize;i++) {
+        array_sum+=nums[i];
+    }
+    
+    return sum-array_sum;
+}
