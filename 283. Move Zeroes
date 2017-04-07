@@ -1,0 +1,19 @@
+// 283. Move Zeroes
+// https://leetcode.com/problems/move-zeroes
+void moveZeroes(int* nums, int numsSize) {
+    int i,j,temp;
+    for(i=0,j=1;i<numsSize&&j<numsSize;i++,j++) { 
+        if(nums[i] == 0) { // j==numsSize 就是i 後面都是0了 不用再移動了
+            while(j<numsSize) {
+                if(nums[j] != 0) {
+                    temp = nums[j];
+                    nums[j] = 0;
+                    nums[i] = temp;
+                    break;
+                } else
+                    j++;
+            }
+            
+        }
+    }
+}
