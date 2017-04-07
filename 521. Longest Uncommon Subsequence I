@@ -1,0 +1,16 @@
+// 521. Longest Uncommon Subsequence I
+// https://leetcode.com/problems/longest-uncommon-subsequence-i
+int findLUSlength(char* a, char* b) {
+    int len_a = strlen(a);
+    int len_b = strlen(b);
+    if(len_a!=len_b)
+        return len_a > len_b ? len_a : len_b;
+    
+    if(len_a == 0)
+        return -1;
+    
+    if(strcmp(a, b) == 0)
+        return -1;
+    else
+        return len_a;
+}
