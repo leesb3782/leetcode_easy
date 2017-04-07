@@ -1,0 +1,35 @@
+// 108. Convert Sorted Array to Binary Search Tree
+// https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+struct TreeNode* sortedArrayToBST(int* nums, int numsSize) {
+    
+    int i;
+
+    //for(i=0;i<numsSize;i++)
+    //    printf("%d", nums[i]);
+    //printf(" numsSize %d\n", numsSize);
+    
+    if(numsSize <= 0)
+        return NULL;
+
+    struct TreeNode*node = (struct TreeNode*) malloc(sizeof(struct TreeNode));
+    if(numsSize == 1) {
+        node->val = nums[0];
+        node->left = NULL;
+        node->right = NULL;
+        return node;
+    }
+    
+    node->val = nums[numsSize/2];
+    node->left = sortedArrayToBST(nums, numsSize/2);
+    node->right = sortedArrayToBST(&nums[numsSize/2+1], numsSize - numsSize/2 - 1);
+    
+    return node;
+}
