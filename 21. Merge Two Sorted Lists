@@ -1,0 +1,46 @@
+// 21. Merge Two Sorted Lists
+// https://leetcode.com/problems/merge-two-sorted-lists
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode* newhead=NULL,*newtail=NULL;
+
+    if(l1==NULL || l2==NULL) {
+        return l1==NULL?l2:l1;
+    }
+
+    if(l1->val < l2->val) {
+        newhead = l1;
+        newtail = l1;
+        l1 = l1->next;
+    } else {
+        newhead = l2;
+        newtail = l2;
+        l2 = l2->next;
+    }
+
+    while(l1!=NULL && l2!=NULL) {
+        if(l1->val < l2->val) {
+            newtail->next = l1;
+            newtail = newtail->next;
+            l1 = l1->next;
+        } else {
+            newtail->next = l2;
+            newtail = newtail->next;
+            l2 = l2->next;
+        }
+    }
+    
+    if(l1!=NULL) {
+        newtail->next = l1;
+    } else {
+        newtail->next = l2;
+    }
+    
+    return newhead;
+}
