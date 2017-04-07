@@ -1,0 +1,62 @@
+// 414. Third Maximum Number
+// https://leetcode.com/problems/third-maximum-number
+int thirdMax(int* nums, int numsSize) {
+    int max_nums[3] = {nums[0],nums[0],nums[0]};
+    int i,j,k,temp;
+    for(i=1,j=1;i<3&&j<numsSize;j++) { //找出前三個不重複的值
+        if(max_nums[0] != nums[j] && max_nums[1] != nums[j] && max_nums[2] != nums[j]) {
+            max_nums[i] = nums[j];
+            i++;
+        }
+    }
+
+    //for(i=0;i<3;i++) {
+    //    printf(" %d ", max_nums[i]);
+    //}
+    //printf("\n");
+
+    for(i=0;i<2;i++) { // 氣泡排序前三個不重複的值
+        for(j=0;j<2-i;j++) {
+            if(max_nums[j] > max_nums[j+1]) {
+                temp = max_nums[j];
+                max_nums[j] = max_nums[j+1];
+                max_nums[j+1] = temp;
+            }
+        }
+    }
+    
+    //for(i=0;i<3;i++) {
+    //    printf(" %d ", max_nums[i]);
+    //}
+    //printf("\n");
+    
+    while(j < numsSize) { // 剩下的值 跟前三個不重複的值 比大小
+        if(nums[j] <= max_nums[0] || nums[j] == max_nums[1] || nums[j] == max_nums[2]) {
+            j++;
+            continue;
+        }
+        max_nums[0] = nums[j];
+        for(i=1;i<3;i++) {
+            if(max_nums[i] < max_nums[i-1]) {
+                temp = max_nums[i];
+                max_nums[i] = max_nums[i-1];
+                max_nums[i-1] = temp;
+            } else
+                break;
+        }
+        j++;
+    }
+
+    //for(i=0;i<3;i++) {
+    //    printf(" %d ", max_nums[i]);
+    //}
+    //printf("\n");
+    
+    if(numsSize < 3)
+        return max_nums[2];
+    else {
+        if(max_nums[0] == max_nums[1] || max_nums[1] == max_nums[2]) //如果有重複的值 表示沒有第三MAX, 所以return 最大;
+            return max_nums[2];
+        return max_nums[0];
+    }
+}
