@@ -1,0 +1,18 @@
+// 383. Ransom Note
+// https://leetcode.com/problems/ransom-note
+bool canConstruct(char* ransomNote, char* magazine) {
+    int i,j;
+    int letters[26] = {0};
+    int len_r = strlen(ransomNote);
+    int len_m = strlen(magazine);
+
+    for(i=0;i<len_m;i++)
+        letters[magazine[i]-'a']++;
+
+    for(i=0;i<len_r;i++) {
+        letters[ransomNote[i]-'a']--;
+        if(letters[ransomNote[i]-'a']<0)
+            return false;
+    }
+    return true;
+}
