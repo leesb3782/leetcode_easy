@@ -1,0 +1,72 @@
+// 225. Implement Stack using Queues
+// https://leetcode.com/problems/implement-stack-using-queues
+class MyStack {
+    queue<int> q1;
+    queue<int> q2;
+    int current_q;
+public:
+    /** Initialize your data structure here. */
+    MyStack() {
+        current_q = 1;
+    }
+    
+    /** Push element x onto stack. */
+    void push(int x) {
+        int temp;
+        if(current_q == 1) {
+            q2.push(x);
+            while(!q1.empty()) {
+                temp = q1.front();
+                q1.pop();
+                q2.push(temp);
+            }
+            current_q = 2;
+        } else {
+            q1.push(x);
+            while(!q2.empty()) {
+                temp = q2.front();
+                q2.pop();
+                q1.push(temp);
+            }
+            current_q = 1;
+        }
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        int temp;
+        if(current_q == 1) {
+            temp = q1.front();
+            q1.pop();
+        } else {
+            temp = q2.front(); 
+            q2.pop();
+        }
+        return temp;
+    }
+    
+    /** Get the top element. */
+    int top() {
+        if(current_q == 1)
+            return q1.front();
+        else
+            return q2.front();        
+    }
+    
+    /** Returns whether the stack is empty. */
+    bool empty() {
+        if(current_q == 1)
+            return q1.empty();
+        else
+            return q2.empty();          
+    }
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * bool param_4 = obj.empty();
+ */
