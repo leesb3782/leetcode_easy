@@ -1,0 +1,63 @@
+// 232. Implement Queue using Stacks
+// https://leetcode.com/problems/implement-queue-using-stacks
+class MyQueue {
+public:
+    stack<int> s;
+    stack<int> queue;
+    /** Initialize your data structure here. */
+    MyQueue() {
+    }
+    
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        s.push(x);
+        return;
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        int answer,temp;
+        while(!s.empty()) {
+            answer = s.top();
+            queue.push(answer);
+            s.pop();
+        }
+        queue.pop();
+        while(!queue.empty()) {
+            temp = queue.top();
+            s.push(temp);
+            queue.pop();
+        }
+        return answer;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        int answer,temp;
+        while(!s.empty()) {
+            answer = s.top();
+            queue.push(answer);
+            s.pop();
+        }
+        while(!queue.empty()) {
+            temp = queue.top();
+            s.push(temp);
+            queue.pop();
+        }
+        return answer;
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return s.empty();
+    }
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * bool param_4 = obj.empty();
+ */
