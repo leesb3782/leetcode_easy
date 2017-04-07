@@ -1,0 +1,49 @@
+// 112. Path Sum
+// https://leetcode.com/problems/path-sum
+struct TreeNodeHelper {
+    struct TreeNode * node;
+    int pathSum;
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int sum) {
+        queue<TreeNodeHelper> q;
+        TreeNodeHelper p, temp;
+        if(root == NULL)
+            return false;
+        p.node = root;
+        p.pathSum = root->val;
+        q.push(p);
+        while(!q.empty()) {
+            p = q.front();
+            q.pop();
+            if(p.node->left==NULL&&p.node->right==NULL) {
+                if(p.pathSum == sum) {
+                    return true;
+                }
+            } else {
+                if(p.node->left!=NULL) {
+                    temp.node = p.node->left;
+                    temp.pathSum = p.pathSum + p.node->left->val;
+                    q.push(temp);
+                }
+                if(p.node->right!=NULL) {
+                    temp.node = p.node->right;
+                    temp.pathSum = p.pathSum + p.node->right->val;
+                    q.push(temp);
+                }
+            }
+        }
+        return false;
+    }
+};
