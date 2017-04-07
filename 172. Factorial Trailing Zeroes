@@ -1,0 +1,11 @@
+// 172. Factorial Trailing Zeroes
+// https://leetcode.com/problems/factorial-trailing-zeroes
+int trailingZeroes(int n) {
+    int i, k = floor(log10(n)/log10(5));
+    int answer = 0;
+    //printf("k %d\n",k);
+    for(i=1;i<=k;i++) {
+        answer += n/pow(5,i);
+    }
+    return answer;
+}
