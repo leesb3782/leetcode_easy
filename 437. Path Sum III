@@ -1,0 +1,36 @@
+// 437. Path Sum III
+// https://leetcode.com/problems/path-sum-iii
+class Solution {
+public:
+    //int count=0;
+    int BinaryTreeTravel(TreeNode* node, int given, int sum, int count) {
+        if(node == NULL)
+            return count;
+        if( sum + node->val == given)
+            count++;
+        //printf("count %d val %d\n", count, node->val);
+        count = BinaryTreeTravel(node->left, given, sum + node->val, count);
+        count = BinaryTreeTravel(node->right, given, sum + node->val, count);
+        
+        return count;
+    }
+    int pathSum(TreeNode* root, int sum) {
+        queue<TreeNode *> q;
+        TreeNode *p;
+        q.push(root);
+        int count = 0;
+        
+        while(!q.empty()) {
+            p = q.front();
+            q.pop();
+            if(p == NULL)
+                continue;
+            else {
+                q.push(p->left);
+                q.push(p->right);
+                count = BinaryTreeTravel(p, sum, 0, count);
+            }
+        }
+        return count;
+    }
+};
