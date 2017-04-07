@@ -1,0 +1,39 @@
+// 504. Base 7
+// https://leetcode.com/problems/base-7
+char* convertToBase7(int num) {
+    int i, len=0, j;
+    int temp=abs(num);
+    int temp_result[32];
+    char *result;
+    
+    temp_result[len] = temp % 7;
+    do {
+        temp = temp/7;
+        len++;
+        temp_result[len] = temp % 7;
+    } while(temp > 0);
+    //printf("len %d\n", len);
+    
+    //for(i=0;i<len;i++)
+    //    printf("temp_result[%d] %d\n", i, temp_result[i]);
+    
+    if(num < 0)
+        len++;
+        
+    result = (char *)malloc((len+1)*sizeof(char));
+    memset(result, 0, (len+1)*sizeof(char));
+    
+    if(num < 0) {
+        result[0] = '-';
+        len--;
+        j = 1;
+    } else
+        j = 0;
+        
+    for(i=len-1;i>=0;i--) {
+        result[j] = temp_result[i] + 0x30;
+        j++;
+    }
+    
+    return result;
+}
