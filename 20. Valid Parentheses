@@ -1,0 +1,23 @@
+// 20. Valid Parentheses
+// https://leetcode.com/problems/valid-parentheses
+bool isValid(char* s) {
+    int len = strlen(s);
+    char *stack = (char *) malloc(len * sizeof(char));
+    int i, stack_len = 0;
+    
+    for(i=0;i<len;i++) {
+        if(s[i] == '(' || s[i] == '{' || s[i] == '[') {
+            stack[stack_len] = s[i];
+            stack_len++;
+        }
+        if(s[i] == ')' || s[i] == '}' || s[i] == ']') {
+            if(stack_len == 0)
+                return false;
+            if(s[i] - stack[stack_len-1] > 2 ||s[i] - stack[stack_len-1] < -2)
+                return false;
+            else
+                stack_len--;
+        }
+    }
+    return stack_len == 0;
+}
