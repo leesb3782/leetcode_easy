@@ -1,0 +1,11 @@
+// 476. Number Complement
+// https://leetcode.com/problems/number-complement
+int findComplement(int num) {
+    int temp = num,complement=1;
+    while(temp>0) {
+        temp>>=1;
+        complement<<=1;
+    }
+    //printf("complement %d\n", complement);
+    return num ^ (complement-1);
+}
