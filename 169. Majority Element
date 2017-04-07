@@ -1,0 +1,18 @@
+// 169. Majority Element
+// https://leetcode.com/problems/majority-element
+int compare(const void* a, const void *b)
+{
+    int l = *((int*)a);
+    int r = *((int*)b);
+
+    if (l == r){
+        return 0;
+    }
+
+    return l < r ? -1 : 1;
+}
+
+int majorityElement(int* nums, int numsSize) {
+    qsort(nums, numsSize, sizeof(int), compare);
+    return nums[numsSize/2];
+}
