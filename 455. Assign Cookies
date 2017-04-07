@@ -1,0 +1,38 @@
+// 455. Assign Cookies
+// https://leetcode.com/problems/assign-cookies
+int compare(const void* a, const void *b)
+{
+    int l = *((int*)a);
+    int r = *((int*)b);
+
+    if (l == r){
+        return 0;
+    }
+
+    return l < r ? 1 : -1;
+}
+
+int findContentChildren(int* g, int gSize, int* s, int sSize) {
+    int i,j, count = 0;
+    qsort(g, gSize, sizeof(int), compare);
+    qsort(s, sSize, sizeof(int), compare);
+    
+    //for(i=0;i<gSize;i++)
+    //   printf("g[%d] %d\n", i, g[i]);
+    //for(i=0;i<sSize;i++)
+    //    printf("s[%d] %d\n", i, s[i]);
+    
+    if(sSize==0)
+        return 0;
+        
+    i=j=0;
+    while(j<gSize&&i<sSize) {
+        if(s[i] >= g[j]) {
+            count++;
+            i++;
+        }
+        j++;
+    }
+    
+    return count;
+}
