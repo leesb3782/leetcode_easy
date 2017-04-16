@@ -1,0 +1,25 @@
+// 551. Student Attendance Record I
+// https://leetcode.com/problems/student-attendance-record-i
+class Solution {
+public:
+    bool checkRecord(string s) {
+        unsigned int len = s.size();
+        unsigned int i, absent = 0;
+        string late = "LLL";
+        size_t found;
+        
+        for(i=0;i<len;i++) {
+            if(s[i] == 'A') {
+                absent++;
+                if(absent >= 2)
+                    return false;
+            }
+        }
+        
+        found = s.find(late);
+        if(found != std::string::npos)
+            return false;
+            
+        return true;
+    }
+};
