@@ -1,0 +1,29 @@
+// 563. Binary Tree Tilt
+// https://leetcode.com/contest/leetcode-weekly-contest-29/problems/binary-tree-tilt/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int BinaryTreeTravel(TreeNode *node, int *sum) {
+        int left_tilt, right_tilt;
+        if(node == NULL)
+            return 0;
+            
+        left_tilt = BinaryTreeTravel(node->left, sum);
+        right_tilt = BinaryTreeTravel(node->right, sum);
+        (*sum) += abs(left_tilt - right_tilt);
+        return node->val + left_tilt + right_tilt;
+    }
+    int findTilt(TreeNode* root) {
+        int sum = 0;
+        BinaryTreeTravel(root, &sum);
+        return sum;
+    }
+};
