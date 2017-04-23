@@ -1,0 +1,15 @@
+// 561. Array Partition I
+// https://leetcode.com/contest/leetcode-weekly-contest-29/problems/array-partition-i
+class Solution {
+public:
+    int arrayPairSum(vector<int>& nums) {
+        int sum=0;
+        sort(nums.begin(),nums.end());
+        for (vector<int>::iterator it=nums.begin(); it!=nums.end(); it+=2) {
+            //cout << ' ' << *it;
+            sum+=*it;
+        }
+        //cout << endl;
+        return sum;
+    }
+};
