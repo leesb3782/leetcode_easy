@@ -1,0 +1,31 @@
+// 566. Reshape the Matrix
+// https://leetcode.com/problems/reshape-the-matrix
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& nums, int r, int c) {
+        int original_r = nums.size();
+        int original_c = nums[0].size();
+        vector<vector<int>> answer(r, vector<int>(c, 0));
+        int i, j, x=0, y=0;
+        
+        //cout << original_r << " " << original_c << endl;
+        if(original_r * original_c != r * c)
+            return nums;
+        
+        for(i=0;i<original_r;i++) {
+            for(j=0;j<original_c;j++) {
+                if(x<r && y<c) {
+                    answer[x][y] = nums[i][j];
+                    y++;
+                    if(y==c) {
+                        x++;
+                        y=0;
+                    }
+                }
+                
+            }
+        }
+        
+        return answer;
+    }
+};
