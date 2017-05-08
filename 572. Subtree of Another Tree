@@ -1,0 +1,47 @@
+// 572. Subtree of Another Tree
+// https://leetcode.com/problems/subtree-of-another-tree/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSametree(TreeNode* s, TreeNode* t) {
+        if(s==NULL && t==NULL)
+            return true;
+        else if((s==NULL && t!=NULL) || (s!=NULL && t ==NULL))
+            return false;
+        else {
+            if(s->val == t->val) {
+                return isSametree(s->left,t->left) & isSametree(s->right,t->right);
+            } else
+                return false;
+        }
+    }
+    bool isSubtree(TreeNode* s, TreeNode* t) {
+        queue<TreeNode *> myqueue;
+        TreeNode *temp;
+        bool result = false;
+        myqueue.push(s);
+        
+        while(!myqueue.empty()) {
+            temp = myqueue.front();
+            myqueue.pop();
+            result = isSametree(temp, t);
+            if(result == true)
+                break;
+            else {
+                if(temp->left!=NULL)
+                    myqueue.push(temp->left);
+                if(temp->right!=NULL)
+                    myqueue.push(temp->right);
+            }
+        }
+        return result;
+    }
+};
