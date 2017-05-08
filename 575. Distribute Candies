@@ -1,0 +1,13 @@
+// 575. Distribute Candies
+// https://leetcode.com/problems/distribute-candies
+class Solution {
+public:
+    int distributeCandies(vector<int>& candies) {
+        unordered_set<int> myset;
+        int len = candies.size();
+        
+        myset.insert(candies.begin(),candies.end());
+        
+        return myset.size() > len/2 ? len/2 : myset.size();
+    }
+};
