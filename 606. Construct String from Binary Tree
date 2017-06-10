@@ -1,0 +1,46 @@
+// 606. Construct String from Binary Tree
+// https://leetcode.com/problems/construct-string-from-binary-tree/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void BinaryTreeTravel(TreeNode *node, string& result) {
+        if(node==NULL) {
+            return;
+        } else if(node->left!=NULL) {
+            result+= "(" + to_string(node->left->val);
+            BinaryTreeTravel(node->left, result);
+            result+= ")";
+            if(node->right!=NULL) {
+                result+= "(" + to_string(node->right->val);
+                BinaryTreeTravel(node->right, result);
+                result+= ")";                
+            }
+            return;
+        }
+        else if(node->left==NULL&&node->right!=NULL) {
+            result+= "()";
+            result+= "(" + to_string(node->right->val);
+            BinaryTreeTravel(node->right, result);
+            result+= ")";
+            return;
+        } else {
+            return;
+        }
+    }
+    string tree2str(TreeNode* t) {
+        string answer;
+        if(t!=NULL) {
+            answer += to_string(t->val);
+            BinaryTreeTravel(t, answer);
+        }
+        return answer;
+    }
+};
